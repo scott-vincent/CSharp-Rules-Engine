@@ -41,10 +41,7 @@ namespace BasketballTest
             // Show the list of actions that were triggered
             Console.WriteLine("\nTriggered Actions");
             Console.WriteLine("-----------------");
-            foreach (var action in results.Actions)
-            {
-                Console.WriteLine(action);
-            }
+            results.Actions.ForEach(a => Console.WriteLine(a));
         }
 
         static void RunTestCase(Facts facts)
