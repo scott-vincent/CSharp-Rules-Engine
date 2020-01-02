@@ -463,9 +463,8 @@ namespace RulesEngineUnitTests
                 File.WriteAllText(tempFile, Helper.GoodRules());
 
                 Engine engine = new Engine(tempFile);
-                File.Delete(tempFile);
-
                 var results = engine.Run(new Facts() { StringFact = "Trigger Rule 1" });
+                File.Delete(tempFile);
 
                 // Confirm that rule 1 was triggered
                 Assert.Equal(true, results.Facts.BoolFact);
