@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>UnitTest_RulesEngine</RootNamespace>
+    <RootNamespace>RulesEngine-UnitTests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

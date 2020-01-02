@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test-Basketball", "Test-Bas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test-Trm", "Test-Trm\Test-Trm.csproj", "{15C9C9BB-6C2C-4E34-942E-B44FCF24C14F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RulesEngineUnitTests", "UnitTest-RulesEngine\RulesEngineUnitTests.csproj", "{6D47CABF-C512-4969-A0C4-FF1227CF76D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RulesEngine-UnitTests", "RulesEngine-UnitTests\RulesEngine-UnitTests.csproj", "{6D47CABF-C512-4969-A0C4-FF1227CF76D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
