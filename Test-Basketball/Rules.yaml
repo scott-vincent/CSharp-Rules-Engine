@@ -1,0 +1,33 @@
+﻿# ===== Rule =====
+- name: Foul Rule 1
+  description: Player has committed 5 fouls AND game is 40 minutes
+  conditions:
+    - "GameDuration == 40"
+    - "PersonalFoulCount >= 5"
+  facts:
+    - "FouledOut = true"
+
+# ===== Rule =====
+- name: Foul Rule 2
+  description: Player has committed 6 fouls AND game is 48 minutes
+  conditions:
+    - "GameDuration == 48"
+    - "PersonalFoulCount >= 6"
+  facts:
+    - "FouledOut = true"
+
+# ===== Rule =====
+- name: Fouled Out Event
+  description: Player has fouled out
+  conditions:
+    - "FouledOut == true"
+  actions:
+    - "Player HasFouledOut"
+
+# ===== Rule =====
+- name: Did Not Foul Out Event
+  description: Player has not fouled out
+  conditions:
+    - "!FouledOut"    # Use ! to test for undefined fact
+  actions:
+    - "Player HasNotFouledOut"

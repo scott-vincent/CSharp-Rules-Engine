@@ -1,0 +1,108 @@
+﻿# ===== Rule =====
+- name: EU TRM
+  description: Define EU TRM countries
+  conditions:
+    - or
+    - "Country == DE"
+    - "Country == FR"
+  facts:
+    - "Trm = EU"
+
+# ===== Rule =====
+- name: Valid Country
+  description: Country must be in a TRM
+  conditions:
+    - "!Trm"    # Use ! to check for undefined facts
+  actions:
+    - "Block UnsupportedCountry"
+
+# ===== Rule =====
+- name: EU Tier 0
+  description: Define EU Tier 0
+  conditions:
+    - "Trm == EU"
+    - "HomeCcyAmount <= 999.99"
+  facts:
+    - "Tier = 0"
+
+# ===== Rule =====
+- name: EU Tier 1
+  description: Define EU Tier 1
+  conditions:
+    - "Trm == EU"
+    - "HomeCcyAmount <= 2999.99"
+    - "!Tier"   # Must not be in any of the previous tiers (saves having to specify a minAmount)
+  facts:
+    - "Tier = 1"
+
+# ===== Rule =====
+- name: EU Tier 2
+  description: Define EU Highest Tier
+  conditions:
+    - "Trm == EU"
+    - "HomeCcyAmount > 0"
+    - "!Tier"
+  facts:
+    - "Tier = 2"
+
+# ===== Rule =====
+- name: Valid Tier
+  description: Must be in a tier and amount must be positive
+  conditions:
+    - or
+    - "!Tier"
+    - "HomeCcyAmount <= 0"
+  actions:
+    - "Block UnknownTier"
+
+# ===== Rule =====
+- name: Basic fields
+  description: Fields that are always required
+  conditions:
+    - "&Trm"    # Use & to check for defined facts, i.e. any Trm
+  actions:
+    - "Field FirstName"
+    - "Field LastName"
+
+# ===== Rule =====
+- name: EU Address
+  description: EU Address fields
+  conditions:
+    - "Trm == EU"
+  actions:
+    - "FieldGroup AddressEu"
+
+# ===== Rule =====
+- name: UK Fields
+  description: Additional fields for UK only
+  conditions:
+    - "Country == UK"
+  actions:
+    - "Field NiNumber"
+
+# ===== Rule =====
+- name: EU Tier 1 Fields
+  description: Additional fields for EU Tier 1
+  conditions:
+    - "Trm == EU"
+    - "Tier == 1"
+  actions:
+    - "Field Occupation"
+
+# ===== Rule =====
+- name: High Risk Countries
+  description: Block high risk countries
+  conditions:
+    - "Country == NG"
+  actions:
+    - "Block HighRiskCountry"
+
+# ===== Rule =====
+- name: EU Tier 1 High Risk
+  description: Additional fields for EU Tier 1 high risk
+  conditions:
+    - "Trm == EU"
+    - "Tier == 1"
+    - "HighRisk == true"
+  actions:
+    - "Field ShoeSize"
