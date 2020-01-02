@@ -14,6 +14,30 @@ This means it is necessary to modify the engine itself for your particular use c
 The facts are manipulated by the engine using reflection so no other files need changing when adding new facts.
 The engine performs full validation of the rules so you will get an appropriate error message if the rules try to use a fact that hasn't been defined or contain a condition that isn't suitable for the fact's object type.
 
+I also wanted a simplified rules engine that imposes certain restrictions on the rules. This stops the rules getting
+overly complex / unwieldly / unintelligable and means the rules engine can just throw an exception rather than trying to deal with more complex scenarios. 
+
+Restrictions
+============
+
+1. Facts cannot be modified
+
+Once a fact is defined it cannot be changed.
+
+A rule that tries to modify an established fact will throw an exception.
+This situation can be avoided by adding a 'fact not defined' condition to a rule, i.e. only add a fact if it is not already added.
+This also means a rule cannot do things like 'Fact += 1' as this is modifying an existing fact. Instead, the rule needs to do something like 'AdditionalFact = True' and another rule would need to check for 'Fact == 1 AND AdditionalFact == true'. 
+
+2. Each rule is only applied once
+
+Once all the conditions of a rule can be evaluated (all the required facts are available) it is evaluated.
+The rule will then never be evaluated again (it doesn't need to be as facts never change due to restriction 1).
+
+3. Rules that check for defined/undefined facts are evaluated last 
+
+This is logical as a fact is only undefined if no other rule has managed to define it.
+So checking to see if a fact is defined/undefined must be done as late as possible.
+
 Getting Started
 ===============
 Include RulesEngine as a Class Library in your own solution.
