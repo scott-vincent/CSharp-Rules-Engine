@@ -6,4 +6,4 @@
 */obj
 **/.toolstarget
 coverage.xml
-*/CoverageReports
+CoverageReports
