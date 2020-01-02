@@ -25,6 +25,12 @@ namespace RulesEngine.DataDef
         public int? PersonalFoulCount { get; set; }
         public bool? FouledOut { get; set; }
 
+        // Unit Test Facts
+        public string StringFact { get; set; }
+        public decimal? DecimalFact { get; set; }
+        public int? IntFact { get; set; }
+        public bool? BoolFact { get; set; }
+
 
         public override string ToString()
         {

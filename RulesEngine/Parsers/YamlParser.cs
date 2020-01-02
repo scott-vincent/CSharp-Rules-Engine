@@ -210,14 +210,15 @@ namespace RulesEngine.Parsers
             var yamlCondition = GetYamlString(node);
             if (yamlCondition == null)
             {
-                throw new RulesException($"Expected a condition string but found: {node}");
+                throw new RulesException($"Expected a condition (string) but found: {node}");
             }
 
             Condition.Oper? oper = null;
             var condition = new Condition();
 
-            // Parse condition
-            var tokens = yamlCondition.Split(" ");
+            // Parse condition (allow 3rd token to contain spaces)
+            var tokens = yamlCondition.Split(" ", 3);
+
             if (tokens.Length == 1)
             {
                 // Special prefixes & (IsDefined) and ! (NotDefined)
@@ -327,14 +328,15 @@ namespace RulesEngine.Parsers
             var yamlFact = GetYamlString(node);
             if (yamlFact == null)
             {
-                throw new RulesException($"Expected a fact string but found: {node}");
+                throw new RulesException($"Expected a fact (string) but found: {node}");
             }
 
-            // Parse fact
-            var tokens = yamlFact.Split(" ");
+            // Parse fact (allow 3rd token to contain spaces)
+            var tokens = yamlFact.Split(" ", 3);
+            
             if (tokens.Length != 3 || tokens[1] != "=")
             {
-                throw new RulesException($"Expected fact in format: 'id = value' or '!id = value' but found: {yamlFact}");
+                throw new RulesException($"Expected fact in format: 'id = value' but found: {yamlFact}");
             }
 
             try
@@ -384,7 +386,7 @@ namespace RulesEngine.Parsers
             var yamlAction = GetYamlString(node);
             if (yamlAction == null)
             {
-                throw new RulesException($"Expected an action string but found: {node}");
+                throw new RulesException($"Expected an action (string) but found: {node}");
             }
 
             // Parse action
@@ -479,7 +481,7 @@ namespace RulesEngine.Parsers
             // Validate action type
             if (!Enum.TryParse(type, out RuleAction.ActionType enumType))
             {
-                throw new RulesException($"Unknown action type '{type}'");
+                throw new RulesException($"Action type '{type}' not defined in the RuleAction.cs file");
             }
 
             return new RuleAction()
