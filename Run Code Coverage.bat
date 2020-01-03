@@ -6,7 +6,7 @@ REM     dotnet tool install --global dotnet-reportgenerator-globaltool --version
 REM
 REM You can run this script directly from Visual Studio if you wish:
 REM   Tools -> External Tools...
-REM     Title: Run Code Coverage, Command: cmd.exe, Arguments: /c "Run Code Coverage.bat", Initial dir: $(SolutionDir)  
+REM     Title: Run Code Coverage, Command: cmd.exe, Arguments: /c "Run Code Coverage.bat", Initial dir: $(SolutionDir), Use Output window  
 
 call :RunCoverage RulesEngine-UnitTests
 goto :eof
