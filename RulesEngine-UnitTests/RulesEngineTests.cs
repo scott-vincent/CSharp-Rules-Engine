@@ -1,6 +1,7 @@
 using RulesEngine.DataDef;
 using RulesEngine.Engine;
 using RulesEngine.Exceptions;
+using RulesEngine.Models;
 using System;
 using System.IO;
 using Xunit;
@@ -116,6 +117,14 @@ namespace RulesEngineUnitTests
             [Theory]
             [InlineData("StringFact == Blah")]
             [InlineData("StringFact != Blah")]
+            [InlineData("IntFact < 1")]
+            [InlineData("IntFact > 123")]
+            [InlineData("IntFact <= 1")]
+            [InlineData("IntFact >= 123")]
+            [InlineData("DecimalFact < 1.23")]
+            [InlineData("DecimalFact > 123.45")]
+            [InlineData("DecimalFact <= 1.23")]
+            [InlineData("DecimalFact >= 123.45")]
             [InlineData("\"&StringFact\"")]
             [InlineData("\"!StringFact\"")]
             [InlineData("AND")]
@@ -543,6 +552,32 @@ namespace RulesEngineUnitTests
             }
         }
 
+        public class OtherTests
+        {
+            [Fact]
+            public void GetAllActions()
+            {
+                Engine engine = new Engine(null, Helper.GoodRules());
+                var actions = engine.GetAllActions();
+
+                Assert.Contains(actions, x => x.Id == "Rule1-Action1");
+                Assert.Contains(actions, x => x.Id == "Rule6");
+            }
+
+            [Fact]
+            public void ModelsToString()
+            {
+                var facts = new Facts() { StringFact = "abc" };
+                Assert.Equal("{\"stringFact\":\"abc\"}", facts.ToString());
+
+                var action = new RuleAction() { Type = RuleAction.ActionType.Field, Id = "Field1" };
+                Assert.Equal("Field Field1", action.ToString());
+
+                var condition = new Condition() { Id = "id", Op = Condition.Oper.LessThanOrEqual, Value = new IntValue(1) };
+                Assert.Equal("id LessThanOrEqual 1", condition.ToString());
+            }
+        }
+
         private static class Helper
         {
             public static string GoodRules()
@@ -590,6 +625,13 @@ namespace RulesEngineUnitTests
     - ""!BoolFact""
   actions:
     - Field Rule6
+# ===== Rule =====
+- name: Rule 7
+  conditions:
+    - DecimalFact >= 1.23
+    - DecimalFact <= 1000
+  actions:
+    - Field Rule7
 ";
             }
         }
